@@ -37,5 +37,5 @@ TileIdx ← ˜⊟°ℂ⌊÷TileSize
   I~Texture~DrawScreen CoverTx
   ◡⋅(I~Draw~Centered~Square Red ÷₂TileSize TilePx)
   I~Draw~Square ˜⊂0.2White⟜⍜÷⌊TileSize I~Mouse~Pos
-  I~Draw~Centered~Text Red 120 ÷₂Dims ▽⊸⊓[⊃Won Lost]{"You Win :)" "You Lose :("}
+  I~Draw~Centered~Text Black 120 ÷₂Dims ▽⊸⊓[⊃Won Lost]{"You Win :)" "You Lose :("}
 )
