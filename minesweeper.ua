@@ -1,10 +1,10 @@
 # Experimental!
 I ~ "git: github.com/Marcos-cat/iris"
 
-TileSize    ←  ⍣(⋕⊡3&args|100)
-GridSize   ← ⍣(⋕°/$"_x_"⊡1&args|8_10)
+TileSize   ← ⍣(⋕°□⊡3&args|100)
+GridSize   ← ⍣(⋕°/$"_x_"°□⊡1&args|8_10)
 Dims       ← ×TileSize ⇌GridSize
-NMines     ← ⍣(⋕⊡2&args|10)
+NMines     ← ⍣(⋕°□⊡2&args|10)
 Mines      ← ⍜♭(°⍆⍜↙¬NMines) ˜↯0GridSize
 Numbers    ← ⧈(⧻⊚) ⬚1↯3 3_3 Mines
 BlankAreas ← ±⧈(⧻⊚) ⬚1↯3 3_3 =0Numbers
