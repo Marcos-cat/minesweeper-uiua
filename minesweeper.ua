@@ -21,6 +21,7 @@ ColorPalette     ← Color~Hex "#1976d2"_"#388e3c"_"#d32f2f"_"#7b1fa2"_"#ff8f00"
   TileSize
   StartTime ← now
   EndTime ← ∞
+  WinMessage ← ∞
   Covered ← ∞
   Flags ← ∞
   MineColors ← ∞
@@ -46,7 +47,7 @@ Lost    ← ±⧻⊚×¬⊃Covered Mines
 Playing ← ¬∨⊃Won Lost
 
 Init ← (
-  ⍜TileSize(×Scale)
+  ⍜TileSize(⁅×Scale)
   °⊸MineColors ˜°⊸⧻ °⍆ColorPalette ⊸Mines
   °⊸Mines ⊸(⍜⊙♭(°⍆ ⍜↙↥₁) ⊃(Mines|˜↯0GridSize))
   °⊸Covered ˜↯1⊸GridSize
@@ -86,9 +87,10 @@ Interact ← (
 )
 
 EndMessage ← (
+  ⍥(°⊸WinMessage ⨬"Lost""Won" ⊸Won) ≍∞⊸WinMessage
   ⍜EndTime(↧now) ⍜⊙Covered(×¬)⊸Mines ⍜⊙Flags(×¬) ⊸Mines
   ⊸(Draw~Centered~Rect ˜⊂0.6Black ×Scale 500_400 ÷₂ScreenSize)
-  ⊸{⊃($"You _" ⨬"Lost""Won" Won|$"_ Mode" Difficulty|$"_ Seconds" Time)}
+  ⊸{⊃($"You _" WinMessage|$"_ Mode" Difficulty|$"_ Seconds" Time)}
   Draw~Centered~Text White ×Scale 70 +×Scale¯100_0_100 ÷₂◡⋅ScreenSize
 )
 
