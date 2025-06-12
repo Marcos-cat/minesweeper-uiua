@@ -84,7 +84,7 @@ Interact ← (
 )
 
 EndMessage ← (
-  ⍜EndTime(↧now) ⍜⊙Covered(×¬)⊸Mines
+  ⍜EndTime(↧now) ⍜⊙Covered(×¬)⊸Mines ⍜⊙Flags(×¬) ⊸Mines
   ⊸(Draw~Centered~Rect ˜⊂0.6Black 500_400 ÷₂ScreenSize)
   ⊸{⊃($"You _" ⨬"Lost""Won" Won|$"_ Mode" Difficulty|$"_ Seconds" Time)}
   Draw~Centered~Text White 70 +¯100_0_100 ÷₂◡⋅ScreenSize
