@@ -1,12 +1,13 @@
 # Experimental!
 I ~ "git: github.com/Marcos-cat/iris" ~ Color Draw Key Mouse Screen Texture
 
+Scale     ← ⍣(⋕°□⊡1&args|1)
 StartSize ← ℂ500 600
 
 I~Open StartSize "Minesweeper"
 Screen!°FPS 30
 
-BarHeight        ← 80
+BarHeight        ← ×Scale 80
 FlagTx           ← Texture~LoadFile "./flag.png"
 BarColor         ← Color~Hex "#79b139"
 BackgroundColors ← Color~Hex "#e5c29f"_"#d7b899"
@@ -45,6 +46,7 @@ Lost    ← ±⧻⊚×¬⊃Covered Mines
 Playing ← ¬∨⊃Won Lost
 
 Init ← (
+  ⍜TileSize(×Scale)
   °⊸MineColors ˜°⊸⧻ °⍆ColorPalette ⊸Mines
   °⊸Mines ⊸(⍜⊙♭(°⍆ ⍜↙↥₁) ⊃(Mines|˜↯0GridSize))
   °⊸Covered ˜↯1⊸GridSize
@@ -71,7 +73,7 @@ SelectionScreen ← ⋅(
 DrawBar ← (
   ⊸(Draw~Rect BarColor °⊸(◌°ℂ) BarHeight ScreenSize ⊙0_0)
   {⊃(Difficulty|$"Flags Left: _" FlagsLeft|$"Time: _" Time)}
-  Draw~Text White 40 ℂ⊙20 20_200_540
+  Draw~Text White ×Scale 40 ×Scale ℂ⊙20 20_200_540
 )
 
 Interact ← (
@@ -85,9 +87,9 @@ Interact ← (
 
 EndMessage ← (
   ⍜EndTime(↧now) ⍜⊙Covered(×¬)⊸Mines ⍜⊙Flags(×¬) ⊸Mines
-  ⊸(Draw~Centered~Rect ˜⊂0.6Black 500_400 ÷₂ScreenSize)
+  ⊸(Draw~Centered~Rect ˜⊂0.6Black ×Scale 500_400 ÷₂ScreenSize)
   ⊸{⊃($"You _" ⨬"Lost""Won" Won|$"_ Mode" Difficulty|$"_ Seconds" Time)}
-  Draw~Centered~Text White 70 +¯100_0_100 ÷₂◡⋅ScreenSize
+  Draw~Centered~Text White ×Scale 70 +×Scale¯100_0_100 ÷₂◡⋅ScreenSize
 )
 
 PlayingScreen ← (
@@ -96,7 +98,7 @@ PlayingScreen ← (
   ⊸(I~Draw~Circle⊃(MineColors|÷₄TileSize|TilePx⊸Mines))
   ⊸(DrawScreen⊸CoverTx)
   ⊸(I~Draw~Centered~Texture⊃(FlagTx|˙ℂ×0.7TileSize|TilePx⊸Flags))
-  ⊸(I~Draw~Square ˜⊂0.2White ⟜⍜(÷⊙(-ℂ0BarHeight)|⌊) TileSize⊙I~Mouse~Pos)
+  ⊸(I~Draw~Square ˜⊂0.2White ⟜⍜(÷⊙-|⌊) ⊙BarHeight TileSize⊙I~Mouse~Pos)
   ⊸DrawBar
 
   ⨬(EndMessage|Interact) ⊸Playing
