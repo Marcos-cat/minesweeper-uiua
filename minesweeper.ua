@@ -67,7 +67,7 @@ SelectionScreen ← ⋅(
   Draw~Background BarColor
   {"Difficulty" "[E]asy" "[M]edium" "[H]ard"}
   Draw~Text White 70 +ℂ100 100 0_100_200_300
-  Draw~Centered~Text White 40 +250 ÷₂StartSize "Press [R] to replay"
+  Draw~Text Centered:1 White 40 +250 ÷₂StartSize "Press [R] to replay"
   ⨬(EasyGame|MediumGame|HardGame|0) ⊗1 I~Key~Pressed "EMH"
 )
 
@@ -89,9 +89,9 @@ Interact ← (
 EndMessage ← (
   ⍥(°⊸WinMessage ⨬"Lost""Won" ⊸Won) ≍∞⊸WinMessage
   ⍜EndTime(↧now) ⍜⊙Covered(×¬)⊸Mines ⍜⊙Flags(×¬) ⊸Mines
-  ⊸(Draw~Centered~Rect ˜⊂0.6Black ×Scale 500_400 ÷₂ScreenSize)
+  ⊸(Draw~Rect Centered:1 ˜⊂0.6Black ×Scale 500_400 ÷₂ScreenSize)
   ⊸{⊃($"You _" WinMessage|$"_ Mode" Difficulty|$"_ Seconds" Time)}
-  Draw~Centered~Text White ×Scale 70 +×Scale¯100_0_100 ÷₂◡⋅ScreenSize
+  Draw~Text Centered:1 White ×Scale 70 +×Scale¯100_0_100 ÷₂◡⋅ScreenSize
 )
 
 PlayingScreen ← (
@@ -99,7 +99,7 @@ PlayingScreen ← (
   ⊸(DrawScreen⊸NumbersTx)
   ⊸(I~Draw~Circle⊃(MineColors|÷₄TileSize|TilePx⊸Mines))
   ⊸(DrawScreen⊸CoverTx)
-  ⊸(I~Draw~Centered~Texture⊃(FlagTx|˙ℂ×0.7TileSize|TilePx⊸Flags))
+  ⊸(I~Draw~Texture Centered:1 ⊃(FlagTx|˙ℂ×0.7TileSize|TilePx⊸Flags))
   ⊸(I~Draw~Square ˜⊂0.2White ⟜⍜(÷⊙-|⌊) ⊙BarHeight TileSize⊙I~Mouse~Pos)
   ⊸DrawBar
 
