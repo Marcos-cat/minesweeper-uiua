@@ -35,7 +35,7 @@ TileIdx ← ˜⊟°ℂ⌊÷TileSize
   I~Texture~DrawScreen BgTx_NumbersTx
   I~Draw~Circle Black ÷₄TileSize TilePx Mines
   I~Texture~DrawScreen CoverTx
-  ◡⋅(I~Draw~Centered~Square Red ÷₂TileSize TilePx)
+  ◡⋅(I~Draw~Square Centered:1 Red ÷₂TileSize TilePx)
   I~Draw~Square ˜⊂0.2White⟜⍜÷⌊TileSize I~Mouse~Pos
-  I~Draw~Centered~Text Black 120 ÷₂Dims ▽⊸⊓[⊃Won Lost]{"You Win :)" "You Lose :("}
+  I~Draw~Text Centered:1 Black 120 ÷₂Dims ▽⊸⊓[⊃Won Lost]{"You Win :)" "You Lose :("}
 )
