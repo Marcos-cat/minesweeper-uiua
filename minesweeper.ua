@@ -1,11 +1,11 @@
 # Experimental!
-I ~ "git: github.com/Marcos-cat/iris" ~ Color Draw Key Mouse Screen Texture
+I ~ "git: github.com/Marcos-cat/iris" ~ Color Draw Key Mouse Texture Window
 
 Scale     ← ⍣(⋕°□⊡1&args|1)
 StartSize ← ℂ500 600
 
 I~Open StartSize "Minesweeper"
-Screen!°FPS 30
+Window!°FPS 30
 
 BarHeight        ← ×Scale 80
 FlagTx           ← Texture~LoadFile "./flag.png"
@@ -30,12 +30,12 @@ ColorPalette     ← Color~Hex "#1976d2"_"#388e3c"_"#d32f2f"_"#7b1fa2"_"#ff8f00"
   CoverTx ← ∞
 }
 ScreenSize ← +BarHeight /ℂ ⇌×⊃TileSize GridSize
-Numbers    ← ⧈(⧻⊚) ⬚1↯3 3_3 Mines
-BlankAreas ← ±⧈(⧻⊚) ⬚1↯3 3_3 =0Numbers
+Numbers    ← ⬚0⧈(⧻⊚) ⬚1↯3 3_3 Mines
+BlankAreas ← ±⬚0⧈(⧻⊚) ⬚1↯3 3_3 =0Numbers
 FlagsLeft  ← -∩(⧻⊚)⊃Flags Mines
 Time       ← ⌊ -⊃(StartTime|↧nowEndTime)
 LayoutGrid ← ⍥₂/≡⊂≡₀(
-  ↻⟜(⌝↘×₂)⊟0⊃÷₅(layout⊙⊃(Color: ⬚White˜⊏ColorPalette-₁|˜⊏⊂@ +@1⇡9))
+  ↻⟜(⌝↘×₂)⊟0⊃÷₅(layout!°⊸Color˜⊙∘ ⊙⊃(⬚White˜⊏ColorPalette-₁|˜⊏⊂@ +@1⇡9))
 )
 Checker    ← ⊏◿₂/+°⍉⇡GridSize
 TilePx     ← +ℂ0BarHeight +˙ℂ÷₂⟜×⊃(⋅TileSize|I~T!°Coords ≡⇌⊚)
@@ -56,7 +56,7 @@ Init ← (
   °⊸BackgroundTx⊸(Texture~LoadImage ˜Checker BackgroundColors)
   °⊸NumbersTx ⊸(Texture~LoadImage LayoutGrid⊃(TileSize|×⊃(¬Mines|Numbers)))
 
-  I~Screen!°Size ⊸ScreenSize
+  I~Window!°Size ⊸ScreenSize
 )
 
 EasyGame   ← (Init New "Easy" 10 8_10 100)
@@ -67,8 +67,8 @@ SelectionScreen ← ⋅(
   Draw~Background BarColor
   {"Difficulty" "[E]asy" "[M]edium" "[H]ard"}
   Draw~Text White 70 +ℂ100 100 0_100_200_300
-  Draw~Text Centered:1 White 40 +250 ÷₂StartSize "Press [R] to replay"
-  ⨬(EasyGame|MediumGame|HardGame|0) ⊗1 I~Key~Pressed "EMH"
+  Draw~Text!°⊸Centered1 White 40 +250 ÷₂StartSize "Press [R] to replay"
+  ⨬(EasyGame|MediumGame|HardGame|0) ˜⨂1 I~Key~Pressed "EMH"
 )
 
 DrawBar ← (
@@ -89,9 +89,9 @@ Interact ← (
 EndMessage ← (
   ⍥(°⊸WinMessage ⨬"Lost""Won" ⊸Won) ≍∞⊸WinMessage
   ⍜EndTime(↧now) ⍜⊙Covered(×¬)⊸Mines ⍜⊙Flags(×¬) ⊸Mines
-  ⊸(Draw~Rect Centered:1 ˜⊂0.6Black ×Scale 500_400 ÷₂ScreenSize)
+  ⊸(Draw~Rect!°⊸Centered 1 ˜⊂0.6Black ×Scale 500_400 ÷₂ScreenSize)
   ⊸{⊃($"You _" WinMessage|$"_ Mode" Difficulty|$"_ Seconds" Time)}
-  Draw~Text Centered:1 White ×Scale 70 +×Scale¯100_0_100 ÷₂◡⋅ScreenSize
+  Draw~Text!°⊸Centered 1 White ×Scale 70 +×Scale¯100_0_100 ÷₂◡⋅ScreenSize
 )
 
 PlayingScreen ← (
@@ -99,13 +99,13 @@ PlayingScreen ← (
   ⊸(DrawScreen⊸NumbersTx)
   ⊸(I~Draw~Circle⊃(MineColors|÷₄TileSize|TilePx⊸Mines))
   ⊸(DrawScreen⊸CoverTx)
-  ⊸(I~Draw~Texture Centered:1 ⊃(FlagTx|˙ℂ×0.7TileSize|TilePx⊸Flags))
+  ⊸(I~Draw~Texture!°⊸Centered 1 ⊃(FlagTx|˙ℂ×0.7TileSize|TilePx⊸Flags))
   ⊸(I~Draw~Square ˜⊂0.2White ⟜⍜(÷⊙-|⌊) ⊙BarHeight TileSize⊙I~Mouse~Pos)
   ⊸DrawBar
 
   ⨬(EndMessage|Interact) ⊸Playing
   ◌°⊸(Color~Alpha Texture~Image) ⊸⊃Covered CoverTx
-  Key!Pressed‼@R(°Screen~Size StartSize ⋅0)
+  Key!Pressed‼@R(°Window~Size StartSize ⋅0)
 )
 
 ◌I~Loop!(⨬(PlayingScreen|SelectionScreen)⊸≍0) $Screen 0
